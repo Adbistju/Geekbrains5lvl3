@@ -8,8 +8,8 @@ public class Car extends Auto{
     private String name;
     private FuelStation fuelStation;
 
-    int indexGas;
-    static int index=0;
+    private int indexAuto;
+    private static int index=0;
 
     boolean runOrStop = false;
 
@@ -18,7 +18,7 @@ public class Car extends Auto{
         fuel=tank;
         this.fuelStation=fuelStation;
         index++;
-        indexGas=index;
+        indexAuto =index;
     }
 
     String getName(){
@@ -26,9 +26,9 @@ public class Car extends Auto{
     }
 
     @Override
-    void drive() {
+    public void drive() {
         runOrStop=false;
-        while (!(fuel <=0)){
+        while (!(fuel <=0)&&fuel>=consumption){
             if(runOrStop==true){
                 System.out.println(this.name+ " stop");
                 runOrStop=false;
@@ -51,7 +51,7 @@ public class Car extends Auto{
     }
 
     @Override
-    void stop() {
+    public void stop() {
         if (runOrStop==true){
             System.out.println(this.name+ " stop");
         }else {
@@ -60,14 +60,14 @@ public class Car extends Auto{
     }
 
     @Override
-    void doRefuel(float t) {
+    public void doRefuel(float t) {
         System.out.println(fuel);
         fuel +=fuel + t;
         System.out.println(fuel);
     }
 
     @Override
-    float getFuel() {
+    public float getFuel() {
         return fuel;
     }
 

@@ -20,8 +20,8 @@ public class FuelStation implements FuelStationInterf{
         try {
             semaphore.acquire();
             for (int i = 0; i < gasPools.length; i++) {
-                if(gasPools[i].status&&gasPools[i].info()>0&&gasPools[i].info()-amount>=0){
-                    System.out.println(gasPools[i].indexGas+": "+gasPools[i].balance+"/"+GasPool.stock);
+                if(gasPools[i].isStatus()&&gasPools[i].getBalance()>0&&gasPools[i].getBalance()-amount>=0){
+                    System.out.println(gasPools[i].getIndexGas()+": "+gasPools[i].getBalance()+"/"+GasPool.getStock());
                     float a = gasPools[i].request(amount);
                     semaphore.release();
                     return a;
@@ -38,13 +38,13 @@ public class FuelStation implements FuelStationInterf{
     }
     public void getIndex(){
         for (int i = 0; i < gasPools.length; i++) {
-            System.out.println(gasPools[i].indexGas);
+            System.out.println(gasPools[i].getIndexGas());
         }
     }
     public boolean checkFreeAllGasPool(){
         int a=0;
         for (int j = 0; j < gasPools.length; j++) {
-            if (gasPools[j].info() == 0){
+            if (gasPools[j].getBalance() == 0){
                 a++;
             }
         }
@@ -53,21 +53,27 @@ public class FuelStation implements FuelStationInterf{
 
     public boolean checkFuel(float autoFuel){
         for (int j = 0; j < gasPools.length; j++) {
-            if (gasPools[j].info() >= autoFuel){
+            if (gasPools[j].getBalance() >= autoFuel){
                 return true;
             }
         }
         return false;
     }
     public void getInfo(){
+        semaphore.availablePermits();
         System.out.println("___________________________________________________");
         System.out.println("___________________________________________________");
         System.out.println("___________________________________________________");
         for (int i = 0; i < gasPools.length; i++) {
-            System.out.println("_________________"+gasPools[i].indexGas+":"+gasPools[i].info()+"/"+GasPool.stock+"______________");
+            System.out.println(
+                    "_________________"+gasPools[i].getIndexGas()+
+                            ":"+gasPools[i].getBalance()+
+                            "/"+GasPool.getStock()+"______________"
+            );
         }
         System.out.println("___________________________________________________");
         System.out.println("___________________________________________________");
         System.out.println("___________________________________________________");
+        semaphore.release();
     }
 }
