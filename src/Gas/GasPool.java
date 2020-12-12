@@ -5,11 +5,11 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class GasPool {
     private static ReadWriteLock lock = new ReentrantReadWriteLock();
-    static float stock = 200f;//200
-    float balance;
-    boolean status=true;
-    String indexGas;
-    static int index=0;
+    private static float stock = 200f;//200
+    private float balance;
+    private boolean status=true;
+    private String indexGas;
+    private static int index=0;
 
     public GasPool() {
         this.balance = stock;
@@ -17,7 +17,7 @@ public class GasPool {
         indexGas="GasPool"+index;
     }
 
-    synchronized float request(float amount){
+    protected float request(float amount){
         status=false;
         lock.writeLock().lock();
         try {
@@ -41,7 +41,27 @@ public class GasPool {
         return f;
     }
 
-    float info(){
+    public static float getStock() {
+        return stock;
+    }
+
+    public static void setStock(float stock) {
+        GasPool.stock = stock;
+    }
+
+    public synchronized float getBalance() {
         return balance;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public String getIndexGas() {
+        return indexGas;
+    }
+
+    public static int getIndex() {
+        return index;
     }
 }

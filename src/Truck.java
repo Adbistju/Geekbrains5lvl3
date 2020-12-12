@@ -8,7 +8,7 @@ public class Truck extends Auto{
     private String name;
     private FuelStation fuelStation;
 
-    int indexGas;
+    private int indexAuto;
     static int index=0;
 
     boolean runOrStop = false;
@@ -18,7 +18,7 @@ public class Truck extends Auto{
         fuel=tank;
         this.fuelStation=fuelStation;
         index++;
-        indexGas=index;
+        indexAuto=index;
     }
 
     String getName(){
@@ -26,9 +26,9 @@ public class Truck extends Auto{
     }
 
     @Override
-    void drive() {
+    public void drive() {
         runOrStop=false;
-        while (!(fuel <=0)){
+        while (!(fuel <=0)&&fuel>=consumption){
             if(runOrStop==true){
                 System.out.println(this.name+ " stop");
                 runOrStop=false;
